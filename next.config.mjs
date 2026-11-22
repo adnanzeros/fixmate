@@ -1,7 +1,11 @@
+// next.config.mjs
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  images: {
+    // ImgBB (i.ibb.co), Google avatars and any seed image host
+    remotePatterns: [{ protocol: 'https', hostname: '**' }],
+  },
 };
 
 export default nextConfig;
