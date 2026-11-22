@@ -1,0 +1,12 @@
+// fixmath/src/components/dashboard/PageHeader.js
+export default function PageHeader({ title, subtitle, children }) {
+  return (
+    <div className="dash-head">
+      <div>
+        <h1>{title}</h1>
+        {subtitle && <p>{subtitle}</p>}
+      </div>
+      {children && <div className="dash-head-actions">{children}</div>}
+    </div>
+  );
+}
