@@ -1,4 +1,4 @@
-// fixmath/src/app/error.js
+
 'use client';
 
 import Link from 'next/link';

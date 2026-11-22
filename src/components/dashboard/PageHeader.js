@@ -1,4 +1,4 @@
-// fixmath/src/components/dashboard/PageHeader.js
+
 export default function PageHeader({ title, subtitle, children }) {
   return (
     <div className="dash-head">

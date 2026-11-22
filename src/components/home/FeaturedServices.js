@@ -1,11 +1,11 @@
-// components/home/FeaturedServices.js
+
 import Link from 'next/link';
 import { PackageSearch } from 'lucide-react';
 import ServiceCard from '@/components/ServiceCard';
 import { getServices } from '@/lib/api';
 
 export default async function FeaturedServices() {
-  // Server returns approved + available services, newest first (limit 6)
+
   const { services } = await getServices({ sort: 'newest', limit: 6 });
 
   return (

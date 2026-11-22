@@ -1,4 +1,4 @@
-// components/home/WhyChoose.js
+
 import { Activity, Quote, ShieldCheck, Wallet, BadgeCheck } from 'lucide-react';
 
 const TRUST = [

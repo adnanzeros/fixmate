@@ -1,4 +1,4 @@
-// fixmath/src/components/auth/SignUpForm.js
+
 'use client';
 
 import Link from 'next/link';
@@ -17,7 +17,7 @@ import {
   validatePassword,
 } from '@/lib/validators';
 
-// Admin is intentionally not selectable. The server also forces anything else to 'customer'.
+
 const ROLES = [
   {
     value: 'customer',

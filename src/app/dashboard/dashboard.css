@@ -1,6 +1,4 @@
-/* fixmath/src/app/dashboard/dashboard.css */
 
-/* ============ Shell ============ */
 .dash { display: flex; min-height: 100vh; background: #fbf7f7; }
 .dash-overlay { position: fixed; inset: 0; z-index: 55; background: rgba(26, 5, 8, 0.55); }
 .dash-side {

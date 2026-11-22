@@ -1,6 +1,4 @@
-// fixmath/src/lib/imgbb.js
 
-/** Uploads an image file to ImgBB and returns its public URL. */
 export async function uploadImage(file) {
   const key = process.env.NEXT_PUBLIC_IMGBB_KEY;
   if (!key) throw new Error('ImgBB key is missing (NEXT_PUBLIC_IMGBB_KEY)');

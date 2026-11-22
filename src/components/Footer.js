@@ -1,4 +1,4 @@
-// components/Footer.js
+
 import Link from 'next/link';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import Logo from './Logo';

@@ -1,6 +1,4 @@
-// lib/utils.js
 
-/** Only allow in-app redirect paths (blocks open-redirect like //evil.com) */
 export function safeRedirect(path) {
   if (!path) return null;
   if (!path.startsWith('/') || path.startsWith('//')) return null;

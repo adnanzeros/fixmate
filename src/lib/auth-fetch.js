@@ -1,13 +1,10 @@
-// lib/auth-fetch.js
+
 'use client';
 
 import { API_URL } from './api';
 import { authClient } from './auth-client';
 
-/**
- * Calls a protected Express API with the BetterAuth JWT in the Authorization header.
- * Throws an Error with the server's message when the request fails.
- */
+
 export async function authFetch(path, options = {}) {
   const { data } = await authClient.token();
   const token = data?.token;

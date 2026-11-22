@@ -1,4 +1,4 @@
-// fixmath/src/app/dashboard/customer/page.js
+
 'use client';
 
 import Link from 'next/link';

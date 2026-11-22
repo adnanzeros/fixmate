@@ -1,4 +1,4 @@
-// fixmath/src/app/dashboard/profile/page.js
+
 'use client';
 
 import { useSession } from '@/lib/auth-client';

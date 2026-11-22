@@ -1,4 +1,4 @@
-// components/home/HowItWorks.js
+
 import { CreditCard, Search, Send, Wrench } from 'lucide-react';
 
 const STEPS = [

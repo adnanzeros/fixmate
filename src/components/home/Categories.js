@@ -1,4 +1,4 @@
-// components/home/Categories.js
+
 import Link from 'next/link';
 import { LayoutGrid } from 'lucide-react';
 import { CATEGORIES } from '@/lib/constants';

@@ -1,4 +1,4 @@
-// app/(public)/about/page.js
+
 import Link from 'next/link';
 import { Eye, HandCoins, ShieldCheck } from 'lucide-react';
 import HowItWorks from '@/components/home/HowItWorks';

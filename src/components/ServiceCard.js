@@ -1,4 +1,4 @@
-// components/ServiceCard.js
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { MapPin, UserRound, Wrench } from 'lucide-react';

@@ -1,4 +1,4 @@
-// fixmath/src/components/dashboard/Modal.js
+
 'use client';
 
 import { useEffect } from 'react';

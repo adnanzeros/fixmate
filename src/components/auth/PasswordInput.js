@@ -1,4 +1,4 @@
-// fixmath/src/components/auth/PasswordInput.js
+
 'use client';
 
 import { useState } from 'react';

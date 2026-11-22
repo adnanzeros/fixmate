@@ -1,4 +1,4 @@
-// fixmath/src/components/dashboard/DataState.js
+
 export function Loading() {
   return (
     <div className="dash-loading" aria-busy="true">

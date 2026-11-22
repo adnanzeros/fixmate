@@ -1,4 +1,4 @@
-// lib/constants.js
+
 import {
   AirVent,
   Laptop,

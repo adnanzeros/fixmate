@@ -1,4 +1,4 @@
-// app/layout.js
+
 import { Inter, Poppins } from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';

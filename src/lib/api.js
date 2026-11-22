@@ -1,14 +1,11 @@
-// lib/api.js
+
 export const API_URL = (
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
 ).replace(/\/+$/, '');
 
 const EMPTY = { services: [], total: 0, page: 1, totalPages: 1 };
 
-/**
- * fetch with a timeout and one retry. A free Render server sleeps after 15 minutes and
- * needs ~30-50 seconds to wake up, so the first request can time out or fail.
- */
+
 async function fetchWithRetry(url, tries = 2) {
   let lastError;
   for (let i = 0; i < tries; i++) {
@@ -26,11 +23,7 @@ async function fetchWithRetry(url, tries = 2) {
   throw lastError;
 }
 
-/**
- * GET /api/services?search=&category=&mode=&sort=&page=&limit=
- * All searching / filtering / sorting happens on the Express + MongoDB side.
- * Expected response: { services: [], total, page, totalPages }
- */
+
 export async function getServices(query = {}) {
   const qs = new URLSearchParams();
   Object.entries(query).forEach(([key, value]) => {

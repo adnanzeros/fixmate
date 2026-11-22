@@ -1,4 +1,4 @@
-// components/Logo.js
+
 import Link from 'next/link';
 
 export function LogoMark({ className = 'logo-mark' }) {

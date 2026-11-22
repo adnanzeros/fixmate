@@ -1,10 +1,10 @@
-// PATH: fixmate/src/app/payment/cancel/page.js
+
 import Link from 'next/link';
 import { CircleX } from 'lucide-react';
 
 export const metadata = { title: 'Payment cancelled' };
 
-// Nothing changes in the database when a payment is cancelled
+
 export default function PaymentCancelPage() {
   return (
     <div className="card pay-card">

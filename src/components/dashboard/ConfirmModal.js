@@ -1,4 +1,4 @@
-// fixmath/src/components/dashboard/ConfirmModal.js
+
 'use client';
 
 import { LoaderCircle } from 'lucide-react';

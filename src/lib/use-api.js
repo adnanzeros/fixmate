@@ -1,13 +1,10 @@
-// src/lib/use-api.js
+
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
 import { authFetch } from './auth-fetch';
 
-/**
- * Loads data from a protected Express API (token is attached automatically).
- * Changing `path` loads again, so filters can simply change the query string.
- */
+
 export function useApi(path) {
   const [state, setState] = useState({ key: '', data: null, error: '' });
   const [version, setVersion] = useState(0);

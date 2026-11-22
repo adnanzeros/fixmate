@@ -1,4 +1,4 @@
-// fixmath/src/app/dashboard/admin/bookings/page.js
+
 'use client';
 
 import { useState } from 'react';

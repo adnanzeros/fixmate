@@ -1,7 +1,7 @@
-// fixmath/src/components/dashboard/ServiceForm.js
+
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
+
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { LoaderCircle } from 'lucide-react';
@@ -10,7 +10,7 @@ import { useSession } from '@/lib/auth-client';
 import { authFetch } from '@/lib/auth-fetch';
 import { uploadImage } from '@/lib/imgbb';
 
-/** Used for both "Add service" (no `service`) and "Edit service" (with `service`). */
+
 export default function ServiceForm({ service = null, onSaved }) {
   const { data: session } = useSession();
   const isEdit = Boolean(service);

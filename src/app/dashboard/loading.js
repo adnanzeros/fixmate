@@ -1,5 +1,4 @@
-// fixmath/src/app/dashboard/loading.js
-// Shown while any dashboard route is loading
+
 export default function DashboardLoading() {
   return (
     <div className="dash-loading" aria-busy="true">

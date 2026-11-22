@@ -1,7 +1,7 @@
-// fixmath/src/components/dashboard/ProfileForm.js
+
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
+
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { LoaderCircle } from 'lucide-react';

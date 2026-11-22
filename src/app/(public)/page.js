@@ -1,4 +1,4 @@
-// app/(public)/page.js
+
 import Hero from '@/components/home/Hero';
 import FeaturedServices from '@/components/home/FeaturedServices';
 import HowItWorks from '@/components/home/HowItWorks';

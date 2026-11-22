@@ -1,4 +1,4 @@
-// PATH: fixmate/src/components/payment/PaymentSuccess.js
+
 'use client';
 
 import Link from 'next/link';

@@ -1,4 +1,4 @@
-// fixmath/src/app/(auth)/layout.js
+
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { CircleCheck } from 'lucide-react';

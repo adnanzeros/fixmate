@@ -1,7 +1,7 @@
-// fixmath/src/app/dashboard/technician/my-services/page.js
+
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
+
 import Link from 'next/link';
 import { useState } from 'react';
 import { toast } from 'sonner';

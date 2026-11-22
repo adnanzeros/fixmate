@@ -1,4 +1,4 @@
-// fixmath/src/components/Navbar.js
+
 'use client';
 
 /* eslint-disable @next/next/no-img-element */

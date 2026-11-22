@@ -1,4 +1,4 @@
-// components/services/ServiceFilters.js
+
 'use client';
 
 import { useState } from 'react';
@@ -6,11 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Search, X } from 'lucide-react';
 import { CATEGORIES, SERVICE_MODES, SORT_OPTIONS } from '@/lib/constants';
 
-/**
- * Filters live in the URL (?search=&category=&mode=&sort=) so they survive a reload
- * and a Home page category card (/services?category=AC) opens already filtered.
- * The actual searching / filtering / sorting is done by the Express + MongoDB server.
- */
+
 export default function ServiceFilters() {
   const router = useRouter();
   const params = useSearchParams();

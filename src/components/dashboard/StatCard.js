@@ -1,4 +1,4 @@
-// fixmath/src/components/dashboard/StatCard.js
+
 export default function StatCard({ icon: Icon, label, value, hint }) {
   return (
     <div className="card stat-card">

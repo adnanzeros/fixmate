@@ -1,4 +1,4 @@
-// fixmath/src/app/dashboard/admin/transactions/page.js
+
 'use client';
 
 import { Receipt } from 'lucide-react';

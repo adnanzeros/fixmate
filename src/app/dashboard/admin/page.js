@@ -1,4 +1,4 @@
-// fixmath/src/app/dashboard/admin/page.js
+
 'use client';
 
 import { BadgeCheck, Users, UserRoundCog, Wallet } from 'lucide-react';

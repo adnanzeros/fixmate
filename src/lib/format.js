@@ -1,4 +1,4 @@
-// fixmath/src/lib/format.js
+
 export function formatDate(value) {
   if (!value) return '-';
   return new Date(value).toLocaleDateString('en-GB', {

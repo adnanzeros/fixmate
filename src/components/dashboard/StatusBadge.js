@@ -1,6 +1,4 @@
-// fixmath/src/components/dashboard/StatusBadge.js
-// Same colors on every dashboard:
-// Requested blue, Accepted indigo, In Progress amber, Completed green, Rejected red, Cancelled gray
+
 
 const LABEL = {
   requested: 'Requested',

@@ -1,7 +1,7 @@
-// fixmath/src/app/dashboard/admin/services/page.js
+
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
+
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { ListChecks } from 'lucide-react';

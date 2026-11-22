@@ -1,15 +1,14 @@
-// fixmath/src/components/auth/GoogleButton.js
+
 'use client';
 
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { signIn } from '@/lib/auth-client';
 
-// Google login is optional. The button (and the "or" divider) only show up when
-// NEXT_PUBLIC_ENABLE_GOOGLE=true, so a missing Google key never leaves a broken button.
+
 const ENABLED = process.env.NEXT_PUBLIC_ENABLE_GOOGLE === 'true';
 
-/** A Google user gets the 'customer' role by default. */
+
 export default function GoogleButton({ callbackURL = '/dashboard' }) {
   const [loading, setLoading] = useState(false);
 

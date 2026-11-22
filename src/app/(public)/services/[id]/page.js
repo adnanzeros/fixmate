@@ -1,5 +1,4 @@
-// fixmath/src/app/(public)/services/[id]/page.js
-/* eslint-disable @next/next/no-img-element */
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';

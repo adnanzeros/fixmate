@@ -1,4 +1,4 @@
-// fixmath/src/components/home/Hero.js
+
 import {
   BadgeCheck,
   CircleCheck,

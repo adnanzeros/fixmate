@@ -1,4 +1,4 @@
-// app/(public)/services/page.js
+
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { SearchX } from 'lucide-react';
