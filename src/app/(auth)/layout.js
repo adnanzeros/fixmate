@@ -1,7 +1,10 @@
 // fixmath/src/app/(auth)/layout.js
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { CircleCheck } from 'lucide-react';
 import Logo from '@/components/Logo';
+import { getSession } from '@/lib/session';
+import { ROLE_DASHBOARD } from '@/lib/constants';
 
 const POINTS = [
   'Verified technicians with reviewed services',
@@ -9,7 +12,16 @@ const POINTS = [
   'Pay only after the job is done',
 ];
 
-export default function AuthLayout({ children }) {
+// A user with a REAL session is sent to their own dashboard. A stale cookie is ignored.
+export default async function AuthLayout({ children }) {
+  let session = null;
+  try {
+    session = await getSession();
+  } catch {
+    session = null; // broken or stale session: just show the sign-in form
+  }
+  if (session) redirect(ROLE_DASHBOARD[session.user.role ?? 'customer'] ?? '/');
+
   return (
     <div className="auth-shell">
       <aside className="auth-side">

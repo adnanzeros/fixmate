@@ -8,8 +8,34 @@ import { MongoClient } from 'mongodb';
 const client = new MongoClient(process.env.MONGODB_URI);
 const db = client.db(process.env.MONGODB_DB || 'fixmate');
 
-const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-const baseURL = process.env.BETTER_AUTH_URL || appUrl;
+const strip = u =>
+  String(u || '')
+    .trim()
+    .replace(/\/+$/, '');
+const withProtocol = u => (u && !/^https?:\/\//.test(u) ? `https://${u}` : u);
+
+const appUrl =
+  strip(process.env.NEXT_PUBLIC_APP_URL) ||
+  strip(withProtocol(process.env.VERCEL_PROJECT_PRODUCTION_URL)) ||
+  'http://localhost:3000';
+const baseURL = strip(process.env.BETTER_AUTH_URL) || appUrl;
+
+// Every origin that may call BetterAuth: your production domain, localhost, the current
+// Vercel deployment and anything listed in TRUSTED_ORIGINS (comma separated).
+const trustedOrigins = [
+  ...new Set(
+    [
+      appUrl,
+      baseURL,
+      'http://localhost:3000',
+      withProtocol(process.env.VERCEL_URL),
+      withProtocol(process.env.VERCEL_BRANCH_URL),
+      ...(process.env.TRUSTED_ORIGINS || '').split(','),
+    ]
+      .map(strip)
+      .filter(Boolean),
+  ),
+];
 
 // The Express server (port 5000) verifies every token against this exact origin,
 // so issuer and audience are set explicitly instead of relying on defaults.
@@ -20,8 +46,7 @@ export const auth = betterAuth({
   baseURL,
   secret: process.env.BETTER_AUTH_SECRET,
 
-  // Add your production domain here (NEXT_PUBLIC_APP_URL) before deploying
-  trustedOrigins: [appUrl, 'http://localhost:3000'],
+  trustedOrigins,
 
   emailAndPassword: {
     enabled: true,
@@ -64,6 +89,15 @@ export const auth = betterAuth({
           return { data: { ...user, role } };
         },
       },
+      update: {
+        // `role` is an input field (needed at sign up), so without this a logged-in user
+        // could call BetterAuth's update-user endpoint and make THEMSELVES admin.
+        // Roles are changed only by the admin API on the Express server.
+        before: async data => {
+          const { role, ...safe } = data;
+          return { data: safe };
+        },
+      },
     },
   },
 
@@ -71,6 +105,14 @@ export const auth = betterAuth({
     // Issues the JWT that the Express server verifies (verifyToken middleware).
     // JWKS endpoint: <BETTER_AUTH_URL>/api/auth/jwks
     jwt({
+      // BetterAuth normally signs a JWT on EVERY getSession() call (layouts, pages).
+      // A bad key in the jwks collection then crashes every page. The token is still
+      // created when the client asks for it (authClient.token()), which is all we need.
+      disableSettingJwtHeader: true,
+      // Local and production share one database but may use different secrets. Without
+      // encryption the stored key never depends on BETTER_AUTH_SECRET, so the
+      // "Failed to decrypt private key" error cannot come back.
+      jwks: { disablePrivateKeyEncryption: true },
       jwt: {
         issuer: tokenOrigin,
         audience: tokenOrigin,

@@ -1,8 +1,30 @@
 // lib/api.js
-export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000';
+export const API_URL = (
+  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
+).replace(/\/+$/, '');
 
 const EMPTY = { services: [], total: 0, page: 1, totalPages: 1 };
+
+/**
+ * fetch with a timeout and one retry. A free Render server sleeps after 15 minutes and
+ * needs ~30-50 seconds to wake up, so the first request can time out or fail.
+ */
+async function fetchWithRetry(url, tries = 2) {
+  let lastError;
+  for (let i = 0; i < tries; i++) {
+    try {
+      const res = await fetch(url, {
+        cache: 'no-store',
+        signal: AbortSignal.timeout(25000),
+      });
+      if (res.status < 500) return res; // 2xx / 4xx are real answers
+      lastError = new Error(`Server returned ${res.status}`);
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  throw lastError;
+}
 
 /**
  * GET /api/services?search=&category=&mode=&sort=&page=&limit=
@@ -17,9 +39,9 @@ export async function getServices(query = {}) {
   });
 
   try {
-    const res = await fetch(`${API_URL}/api/services?${qs.toString()}`, {
-      cache: 'no-store',
-    });
+    const res = await fetchWithRetry(
+      `${API_URL}/api/services?${qs.toString()}`,
+    );
     if (!res.ok) return EMPTY;
     return await res.json();
   } catch {
@@ -33,11 +55,8 @@ export async function getServices(query = {}) {
  */
 export async function getService(id) {
   try {
-    const res = await fetch(
+    const res = await fetchWithRetry(
       `${API_URL}/api/services/${encodeURIComponent(id)}`,
-      {
-        cache: 'no-store',
-      },
     );
     if (!res.ok) return null;
     return await res.json();
