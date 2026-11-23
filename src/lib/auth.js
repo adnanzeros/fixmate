@@ -1,3 +1,4 @@
+// fixmate/src/lib/auth.js
 
 import { betterAuth } from 'better-auth';
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
@@ -5,8 +6,38 @@ import { nextCookies } from 'better-auth/next-js';
 import { jwt } from 'better-auth/plugins';
 import { MongoClient } from 'mongodb';
 
-const client = new MongoClient(process.env.MONGODB_URI);
-const db = client.db(process.env.MONGODB_DB || 'fixmate');
+const dbName = process.env.MONGODB_DB || 'fixmate';
+const g = globalThis;
+
+// One shared client per server instance. If its topology gets closed (for example
+// after a failed first connection), the next call creates a fresh client.
+function liveClient() {
+  if (!g.__fixmateMongoClient) {
+    const client = new MongoClient(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 10000,
+      connectTimeoutMS: 10000,
+      maxPoolSize: 5,
+      maxIdleTimeMS: 30000,
+    });
+    client.on('topologyClosed', () => {
+      if (g.__fixmateMongoClient === client) g.__fixmateMongoClient = undefined;
+    });
+    g.__fixmateMongoClient = client;
+  }
+  return g.__fixmateMongoClient;
+}
+
+// Better Auth keeps this object, but every call goes to the current healthy client
+const db = new Proxy(
+  {},
+  {
+    get(_target, prop) {
+      const real = liveClient().db(dbName);
+      const value = real[prop];
+      return typeof value === 'function' ? value.bind(real) : value;
+    },
+  },
+);
 
 const strip = u =>
   String(u || '')
@@ -19,7 +50,6 @@ const appUrl =
   strip(withProtocol(process.env.VERCEL_PROJECT_PRODUCTION_URL)) ||
   'http://localhost:3000';
 const baseURL = strip(process.env.BETTER_AUTH_URL) || appUrl;
-
 
 const trustedOrigins = [
   ...new Set(
@@ -36,11 +66,11 @@ const trustedOrigins = [
   ),
 ];
 
-
+// the server (Express) checks the JWT issuer/audience against this same origin
 const tokenOrigin = new URL(baseURL).origin;
 
 export const auth = betterAuth({
-  database: mongodbAdapter(db, { client }),
+  database: mongodbAdapter(db),
   baseURL,
   secret: process.env.BETTER_AUTH_SECRET,
 
@@ -51,7 +81,6 @@ export const auth = betterAuth({
     minPasswordLength: 6,
     autoSignIn: true,
   },
-
 
   socialProviders:
     process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
@@ -80,14 +109,14 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
-    
+        // nobody can register as admin: anything except 'technician' becomes 'customer'
         before: async user => {
           const role = user.role === 'technician' ? 'technician' : 'customer';
           return { data: { ...user, role } };
         },
       },
       update: {
-  
+        // role can never be changed through the auth API (admin uses the Express API)
         before: async data => {
           const { role, ...safe } = data;
           return { data: safe };
@@ -97,11 +126,8 @@ export const auth = betterAuth({
   },
 
   plugins: [
-
     jwt({
-   
       disableSettingJwtHeader: true,
-     
       jwks: { disablePrivateKeyEncryption: true },
       jwt: {
         issuer: tokenOrigin,
@@ -115,6 +141,6 @@ export const auth = betterAuth({
         }),
       },
     }),
-    nextCookies(), 
+    nextCookies(), // keep last
   ],
 });
